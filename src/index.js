@@ -1,9 +1,12 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
+const methodOverride = require('method-override');
+const session = require('express-session');
 
 //Initializations
 const app = express();
+require('./database');
 
 // Settings
 app.set('port', process.env.PORT || 4000);
@@ -17,13 +20,21 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // Middlewares
-
+app.use(express.urlencoded({extended: false}));
+app.use(methodOverride('_method'));
+app.use(session({
+    secret: 'mysecret',
+    resave: true,
+    saveUninitialized: true
+}));
 
 // Global Variables
 
 
 // Routes
 app.use(require('./routes'));
+app.use(require('./routes/users'));
+app.use(require('./routes/notes'));
 
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')));
