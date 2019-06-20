@@ -8,3 +8,5 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     register_date: { type: Date, default: Date.now }
 });
+
+module.exports = mongoose.model('User', UserSchema);

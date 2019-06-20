@@ -1,0 +1,46 @@
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="content">
+                <h1 class="title">Todas tus notas</h1>
+                <p class="subtitle">Estas son tus notas privadas</p>
+                <a href="/notes/add" class="button is-primary">Agregar nueva nota</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        {{#if notes}}
+        <div class="columns is-multiline is-centered">
+            {{#each notes}}
+            <div class="column is-3">
+                <div class="box">
+                    <div class="content">
+                        <h4>{{ title }}</h4>
+                        <p>{{ description }}</p>
+                    </div>
+                    <hr>
+                    <div class="buttons has-addons is-right">
+                        <a href="#" class="button is-light">Editar</a>
+                        <a href="#" class="button is-danger">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="columns">
+            <div class="column is-one-third is-offset-one-third">
+                <div class="box has-text-centered">
+                    <div class="content">
+                        <h1 class="title">Esto se ve vacío</h1>
+                        <p class="subtitle">Comienza agregando tu primera nota</p>
+                        <a href="/notes/add" class="button is-primary is-fullwidth">Agregar nueva nota</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</section>
