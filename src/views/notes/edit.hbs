@@ -7,15 +7,16 @@
                         <h1 class="title">Editar nota</h1>
                         <p class="subtitle">Editando</p>
                     </div>
-                    <form action="">
+                    <form action="/notes/edit/{{note._id}}?_method=PUT" method="POST">
+                        <input type="hidden" name="_method" value="PUT">
                         <div class="field">
                             <p class="control">
-                                <input class="input" type="text" placeholder="Título" name="title">
+                                <input class="input" type="text" placeholder="Título" name="title" value="{{note.title}}">
                             </p>
                         </div>
                         <div class="field">
                             <p class="control">
-                                <textarea class="textarea" placeholder="Descripción" name="description"></textarea>
+                                <textarea class="textarea" placeholder="Descripción" name="description">{{note.description}}</textarea>
                             </p>
                         </div>
                         <div class="field">

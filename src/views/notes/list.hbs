@@ -22,8 +22,11 @@
                     </div>
                     <hr>
                     <div class="buttons has-addons is-right">
-                        <a href="#" class="button is-light">Editar</a>
-                        <a href="#" class="button is-danger">Eliminar</a>
+                        <a href="/notes/edit/{{_id}}" class="button is-light">Editar</a>
+                        <form action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="button is-danger">Eliminar</button>
+                        </form>
                     </div>
                 </div>
             </div>

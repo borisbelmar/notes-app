@@ -12,20 +12,54 @@ router.get('/notes/add', (req, res) => {
     res.render('./notes/add');
 });
 
-router.post('/notes/add', async(req, res) => {
-    const { title, description } = req.body;
-    const newNote = new Note({ title, description });
+router.post('/notes/add', async (req, res) => {
+    const {
+        title,
+        description
+    } = req.body;
+    const newNote = new Note({
+        title,
+        description
+    });
+    const errors = [];
     // Arreglar error handler
-    if(!title || !description) {
-        console.log("Error");
+    if (!title) {
+        errors.push({
+            text: 'Escribe un título'
+        });
+    }
+    if (!description) {
+        errors.push({
+            text: 'Escribe una descripción'
+        });
+    }
+    if (errors.length > 0) {
+        res.render('./notes/add', {
+            errors,
+            title,
+            description
+        });
     } else {
         await newNote.save();
         res.redirect('/notes');
     }
 });
 
-router.get('/notes/edit', (req, res) => {
-    res.render('./notes/edit');
+router.get('/notes/edit/:id', async(req, res) => {
+    const note = await Note.findById(req.params.id);
+    res.render('./notes/edit', {note});
+});
+
+router.put('/notes/edit/:id', async(req, res) => {
+    const { title, description } = req.body;
+    await Note.findByIdAndUpdate(req.params.id, { title, description });
+    res.redirect('/notes');
+});
+
+router.delete('/notes/delete/:id', async(req, res) => {
+    console.log(req.params.id);
+    await Note.findByIdAndDelete(req.params.id);
+    res.redirect('/notes');
 });
 
 module.exports = router;
