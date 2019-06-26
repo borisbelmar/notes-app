@@ -7,31 +7,31 @@
                         <h1 class="title">Signup</h1>
                         <p class="subtitle">Show me your credentials</p>
                     </div>
-                    <form action="">
+                    <form action="/signup" method="POST">
                         <div class="field">
                             <p class="control">
-                                <input class="input" type="text" placeholder="First Name" name="firstname">
+                                <input class="input" type="text" placeholder="First Name" name="firstname" value="{{firstname}}">
                             </p>
                         </div>
                         <div class="field">
                             <p class="control">
-                                <input class="input" type="text" placeholder="Last Name" name="lastname">
+                                <input class="input" type="text" placeholder="Last Name" name="lastname" value="{{lastname}}">
                             </p>
                         </div>
                         <hr>
                         <div class="field">
                             <p class="control">
-                                <input class="input" type="email" placeholder="Email" name="email">
+                                <input class="input" type="email" placeholder="Email" name="email" value="{{email}}">
                             </p>
                         </div>
                         <div class="field">
                             <p class="control">
-                                <input class="input" type="password" placeholder="Password" name="password">
+                                <input class="input" type="password" placeholder="Password" name="password" required>
                             </p>
                         </div>
                         <div class="field">
                             <p class="control">
-                                <input class="input" type="password" placeholder="Confirm your password" name="cpassword">
+                                <input class="input" type="password" placeholder="Confirm your password" name="confirm_password">
                             </p>
                         </div>
                         <div class="field">
@@ -39,6 +39,12 @@
                                 <button class="button is-fullwidth is-primary">Signup</button>
                             </div>
                         </div>
+                        {{#each errors}}
+                        <div class="notification is-danger">
+                            <button class="delete"></button>
+                            {{text}}
+                        </div>
+                        {{/each}}
                     </form>
                 </div>
             </div>
