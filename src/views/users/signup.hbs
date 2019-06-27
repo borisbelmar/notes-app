@@ -39,12 +39,7 @@
                                 <button class="button is-fullwidth is-primary">Signup</button>
                             </div>
                         </div>
-                        {{#each errors}}
-                        <div class="notification is-danger">
-                            <button class="delete"></button>
-                            {{text}}
-                        </div>
-                        {{/each}}
+                        {{> errors }}
                     </form>
                 </div>
             </div>
