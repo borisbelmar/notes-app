@@ -22,11 +22,12 @@
                     About
                 </a>
             </div>
-
+            
             <div class="navbar-end">
+                {{#if user}}
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        User
+                        <strong>{{user.firstname}} {{user.lastname}}</strong>
                     </a>
 
                     <div class="navbar-dropdown">
@@ -37,11 +38,12 @@
                             Profile
                         </a>
                         <hr class="navbar-divider">
-                        <a class="navbar-item">
+                        <a class="navbar-item" href="/logout">
                             Logout
                         </a>
                     </div>
                 </div>
+                {{else}}
                 <div class="navbar-item">
                     <div class="buttons">
                         <a class="button is-primary" href="/signup">
@@ -52,6 +54,7 @@
                         </a>
                     </div>
                 </div>
+                {{/if}}
             </div>
         </div>
     </div>

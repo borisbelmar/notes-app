@@ -1,3 +1,10 @@
+{{#if error}}
+<div class="notification is-danger">
+    <button class="delete"></button>
+        <p>{{error}}.</p>
+</div>
+{{/if}}
+
 {{#if errors}}
 <div class="notification is-danger">
     <button class="delete"></button>

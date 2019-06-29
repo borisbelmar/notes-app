@@ -3,15 +3,24 @@ const router = express.Router();
 
 const User = require('../models/User');
 
-router.get('/login', (req, res) => {
+const passport = require('passport');
+const { isNotAuthenticated, isAuthenticated } = require('../helpers/auth');
+
+router.get('/login', isNotAuthenticated, (req, res) => {
     res.render('./users/login');
 });
 
-router.get('/signup', (req, res) => {
+router.post('/login', isNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/notes',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
+
+router.get('/signup', isNotAuthenticated, (req, res) => {
     res.render('./users/signup');
 });
 
-router.post('/signup', async(req, res) => {
+router.post('/signup', isNotAuthenticated, async(req, res) => {
     const { firstname, lastname, email, password, confirm_password } = req.body;
     const emailUser = await User.findOne({email: email});
     const errors = [];
@@ -35,7 +44,12 @@ router.post('/signup', async(req, res) => {
     }
 });
 
-router.get('/profile', (req, res) => {
+router.get('/logout', isAuthenticated, (req, res) => {
+    req.logOut();
+    res.redirect('/');
+});
+
+router.get('/profile', isAuthenticated, (req, res) => {
     res.render('./users/profile');
 });
 

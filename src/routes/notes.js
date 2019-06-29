@@ -2,27 +2,21 @@ const express = require('express');
 const router = express.Router();
 
 const Note = require('../models/Note');
+const { isAuthenticated } = require('../helpers/auth');
 
-router.get('/notes', async(req, res) => {
-    const notes = await Note.find();
+router.get('/notes', isAuthenticated, async(req, res) => {
+    const notes = await Note.find({user: req.user.id});
     res.render('./notes/list', { notes });
 });
 
-router.get('/notes/add', (req, res) => {
+router.get('/notes/add', isAuthenticated, (req, res) => {
     res.render('./notes/add');
 });
 
-router.post('/notes/add', async (req, res) => {
-    const {
-        title,
-        description
-    } = req.body;
-    const newNote = new Note({
-        title,
-        description
-    });
+router.post('/notes/add', isAuthenticated, async (req, res) => {
+    const { title,description } = req.body;
+    const newNote = new Note({ title, description });
     const errors = [];
-    // Arreglar error handler
     if (!title) {
         errors.push({
             text: 'Escribe un título'
@@ -40,25 +34,26 @@ router.post('/notes/add', async (req, res) => {
             description
         });
     } else {
+        newNote.user = req.user.id;
         await newNote.save();
         req.flash('success_msg', 'Nota creada con éxito');
         res.redirect('/notes');
     }
 });
 
-router.get('/notes/edit/:id', async(req, res) => {
+router.get('/notes/edit/:id', isAuthenticated, async(req, res) => {
     const note = await Note.findById(req.params.id);
     res.render('./notes/edit', {note});
 });
 
-router.put('/notes/edit/:id', async(req, res) => {
+router.put('/notes/edit/:id', isAuthenticated, async(req, res) => {
     const { title, description } = req.body;
     await Note.findByIdAndUpdate(req.params.id, { title, description });
     req.flash('success_msg', 'Nota editada con éxito');
     res.redirect('/notes');
 });
 
-router.delete('/notes/delete/:id', async(req, res) => {
+router.delete('/notes/delete/:id', isAuthenticated, async(req, res) => {
     await Note.findByIdAndDelete(req.params.id);
     req.flash('success_msg', 'Nota eliminada con éxito');
     res.redirect('/notes');
